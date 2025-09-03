@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NutriMax — Emagreça de forma saudável e rápida</title>
+  <!-- SEO básico -->
+  <meta name="description" content="NutriMax: dietas personalizadas, treinos guiados, receitas fáceis e acompanhamento de resultados. Emagreça de forma saudável e rápida.">
+  <meta name="theme-color" content="#E53935" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="NutriMax — Emagreça de forma saudável e rápida">
+  <meta property="og:description" content="Dietas, treinos, receitas e acompanhamento com gráficos. Comunidade e notificações.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://seu-dominio.com/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop">
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NutriMax",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "BRL"}
+  }
+  </script>
+
+  <!-- TailwindCSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E53935',
+          },
+          boxShadow: {
+            glow: '0 0 0 0 rgba(229,57,53,0.6)'
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(229,57,53,0.6)' },
+              '50%': { boxShadow: '0 0 20px 6px rgba(229,57,53,0.35)' }
+            },
+            fadeUp: {
+              '0%': { opacity: 0, transform: 'translateY(16px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          },
+          animation: {
+            pulseGlow: 'pulseGlow 2s ease-in-out infinite',
+            fadeUp: 'fadeUp .75s ease forwards'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React + ReactDOM + Recharts (UMD) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+  <!-- Lucide Icons -->
+  <script crossorigin src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lightweight carousel helper -->
+  <style>
+    .carousel { scroll-snap-type:x mandatory; }
+    .carousel > div { scroll-snap-align:center; }
+  </style>
+</head>
+<body class="bg-white text-zinc-900 antialiased">
+
+  <!-- Nav -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-zinc-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#inicio" class="flex items-center gap-2 font-semibold text-xl">
+        <span class="inline-block w-3.5 h-3.5 rounded-sm bg-primary"></span>
+        NutriMax
+      </a>
+      <nav class="hidden md:flex items-center gap-6 font-medium">
+        <a href="#inicio" class="hover:text-primary transition" data-i18n="nav.home">Início</a>
+        <a href="#receitas" class="hover:text-primary transition" data-i18n="nav.recipes">Receitas</a>
+        <a href="#treinos" class="hover:text-primary transition" data-i18n="nav.workouts">Treinos</a>
+        <a href="#planos" class="hover:text-primary transition" data-i18n="nav.plans">Planos</a>
+        <a href="#comunidade" class="hover:text-primary transition" data-i18n="nav.community">Comunidade</a>
+        <a href="#perfil" class="hover:text-primary transition" data-i18n="nav.profile">Meu Perfil</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="langToggle" class="px-3 py-1.5 rounded-lg border border-zinc-300 hover:border-primary hover:text-primary transition text-sm">PT/EN</button>
+        <button id="loginBtn" class="px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition" data-i18n="cta.login">Entrar</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio" class="pt-20">
+    <!-- Hero / Banner -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-0 -z-10">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1920&auto=format&fit=crop" alt="Treino em academia" class="w-full h-full object-cover opacity-70">
+        <div class="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-white"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 grid md:grid-cols-2 gap-10 items-center">
+        <div class="[animation:fadeUp]">
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-zinc-900">
+            NutriMax
+            <span class="block text-primary" data-i18n="hero.subtitle">Emagreça de forma saudável e rápida</span>
+          </h1>
+          <p class="mt-4 text-zinc-600 max-w-xl" data-i18n="hero.description">
+            Dietas personalizadas, treinos para todos os níveis, receitas fáceis e acompanhamento de resultados com gráficos. Junte-se à nossa comunidade.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#planos" class="px-6 py-3 rounded-2xl bg-primary text-white font-semibold hover:opacity-90 active:scale-95 transition animate-pulseGlow" id="ctaStart" data-i18n="cta.start">Comece Agora</a>
+            <button id="installBtn" class="px-6 py-3 rounded-2xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white active:scale-95 transition" data-i18n="cta.install">Instalar App</button>
+          </div>
+          <div class="mt-6 flex items-center gap-4 text-sm text-zinc-600">
+            <div class="flex items-center gap-2"><i data-lucide="salad"></i> <span data-i18n="benefit1">Dietas personalizadas</span></div>
+            <div class="flex items-center gap-2"><i data-lucide="dumbbell"></i> <span data-i18n="benefit2">Exercícios guiados</span></div>
+            <div class="flex items-center gap-2"><i data-lucide="line-chart"></i> <span data-i18n="benefit3">Gráficos de progresso</span></div>
+          </div>
+        </div>
+        <div class="[animation:fadeUp] animation-delay-200">
+          <!-- Carousel -->
+          <div class="overflow-x-auto carousel flex gap-4 snap-x snap-mandatory" aria-label="Carrossel de imagens fitness">
+            <div class="min-w-[80%] md:min-w-[380px] h-64 rounded-2xl overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1200&auto=format&fit=crop" alt="Pessoa treinando" class="w-full h-full object-cover">
+            </div>
+            <div class="min-w-[80%] md:min-w-[380px] h-64 rounded-2xl overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop" alt="Refeição saudável" class="w-full h-full object-cover">
+            </div>
+            <div class="min-w-[80%] md:min-w-[380px] h-64 rounded-2xl overflow-hidden shadow-xl">
+              <img src="https://images.unsplash.com/photo-1514511547117-f9c3d516c049?q=80&w=1200&auto=format&fit=crop" alt="Corrida ao ar livre" class="w-full h-full object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="py-14 bg-white" id="beneficios">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8" data-i18n="benefits.title">Principais benefícios</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="goal" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Dietas personalizadas</h3><p class="text-sm text-zinc-600">Planos alinhados aos seus objetivos.</p></div>
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="activity" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Exercícios para todos</h3><p class="text-sm text-zinc-600">Iniciante ao avançado.</p></div>
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="utensils" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Receitas fáceis</h3><p class="text-sm text-zinc-600">Rápidas e nutritivas.</p></div>
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="line-chart" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Acompanhamento</h3><p class="text-sm text-zinc-600">Gráficos de evolução.</p></div>
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="users" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Comunidade</h3><p class="text-sm text-zinc-600">Motivação e suporte.</p></div>
+          <div class="p-6 rounded-2xl border hover:shadow-lg transition [animation:fadeUp]"><i data-lucide="bell" class="w-6 h-6 text-primary"></i><h3 class="font-semibold mt-3">Lembretes</h3><p class="text-sm text-zinc-600">Treinos e refeições.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Receitas -->
+    <section id="receitas" class="py-14 bg-zinc-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-6">
+          <h2 class="text-2xl md:text-3xl font-bold" data-i18n="recipes.title">Receitas</h2>
+          <div class="flex gap-2">
+            <select id="recipeFilter" class="px-3 py-2 rounded-xl border text-sm">
+              <option value="all">Todas</option>
+              <option value="emagrecimento">Emagrecimento</option>
+              <option value="massa">Ganho de massa</option>
+              <option value="vegana">Veganas</option>
+              <option value="lowcarb">Low carb</option>
+            </select>
+            <input id="recipeSearch" type="text" placeholder="Buscar..." class="px-3 py-2 rounded-xl border text-sm w-40">
+          </div>
+        </div>
+        <div id="recipeGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
+
+    <!-- Treinos -->
+    <section id="treinos" class="py-14 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="workouts.title">Treinos</h2>
+        <div id="workoutList" class="grid md:grid-cols-2 gap-6"></div>
+      </div>
+    </section>
+
+    <!-- Planos -->
+    <section id="planos" class="py-14 bg-zinc-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="plans.title">Planos de dieta</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="rounded-2xl border p-6 hover:shadow-xl transition">
+            <h3 class="font-semibold text-lg">Essencial</h3>
+            <p class="text-sm text-zinc-600 mt-1">Plano básico para começar</p>
+            <div class="text-3xl font-extrabold mt-4">R$ 0</div>
+            <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+              <li>• Receitas e treinos</li>
+              <li>• Comunidade</li>
+              <li>• Gráficos de progresso</li>
+            </ul>
+            <button class="mt-6 w-full px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition" data-i18n="cta.start">Comece Agora</button>
+          </div>
+          <div class="rounded-2xl border p-6 hover:shadow-xl transition relative">
+            <span class="absolute -top-3 right-4 bg-primary text-white text-xs px-2 py-1 rounded">Popular</span>
+            <h3 class="font-semibold text-lg">Pro</h3>
+            <p class="text-sm text-zinc-600 mt-1">Planos personalizados</p>
+            <div class="text-3xl font-extrabold mt-4">R$ 29</div>
+            <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+              <li>• Dietas por objetivo</li>
+              <li>• Lembretes inteligentes</li>
+              <li>• Suporte prioritário</li>
+            </ul>
+            <button class="mt-6 w-full px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition" data-i18n="cta.start">Comece Agora</button>
+          </div>
+          <div class="rounded-2xl border p-6 hover:shadow-xl transition">
+            <h3 class="font-semibold text-lg">Premium</h3>
+            <p class="text-sm text-zinc-600 mt-1">Tudo do Pro + extras</p>
+            <div class="text-3xl font-extrabold mt-4">R$ 59</div>
+            <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+              <li>• Planos semanais dinâmicos</li>
+              <li>• Integração com wearables</li>
+              <li>• Comunidade VIP</li>
+            </ul>
+            <button class="mt-6 w-full px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition" data-i18n="cta.start">Comece Agora</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comunidade -->
+    <section id="comunidade" class="py-14 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="community.title">Comunidade</h2>
+        <div class="rounded-2xl border p-6">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <div class="p-4 rounded-xl border">
+                <p class="font-semibold">@maria_fit</p>
+                <p class="text-sm text-zinc-600 mt-1">Perdi 4kg em 30 dias seguindo as receitas do NutriMax! 💪</p>
+              </div>
+              <div class="p-4 rounded-xl border">
+                <p class="font-semibold">@joao.runner</p>
+                <p class="text-sm text-zinc-600 mt-1">Os treinos de HIIT são top. Energia lá em cima!</p>
+              </div>
+            </div>
+            <form class="space-y-3">
+              <input class="w-full px-4 py-3 rounded-xl border" placeholder="Compartilhe sua conquista..." />
+              <button class="px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition">Publicar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Perfil -->
+    <section id="perfil" class="py-14 bg-zinc-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6" data-i18n="profile.title">Meu Perfil</h2>
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="rounded-2xl border p-6 space-y-4">
+            <div class="flex items-center gap-4">
+              <img id="avatar" src="https://api.dicebear.com/9.x/initials/svg?seed=PF" alt="Avatar" class="w-16 h-16 rounded-full border" />
+              <div>
+                <p class="font-semibold">Pedro Henrique</p>
+                <p class="text-sm text-zinc-600">Meta: -6 kg</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="text-sm text-zinc-600">Peso (kg)</label>
+                <input id="peso" type="number" class="w-full px-3 py-2 rounded-xl border" value="82" />
+              </div>
+              <div>
+                <label class="text-sm text-zinc-600">Altura (cm)</label>
+                <input id="altura" type="number" class="w-full px-3 py-2 rounded-xl border" value="176" />
+              </div>
+              <div>
+                <label class="text-sm text-zinc-600">Idade</label>
+                <input id="idade" type="number" class="w-full px-3 py-2 rounded-xl border" value="24" />
+              </div>
+              <div>
+                <label class="text-sm text-zinc-600">Meta</label>
+                <input id="meta" type="text" class="w-full px-3 py-2 rounded-xl border" value="Perder 6 kg" />
+              </div>
+            </div>
+            <button id="saveProfile" class="w-full px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition">Salvar</button>
+          </div>
+          <div class="rounded-2xl border p-6 col-span-2">
+            <h3 class="font-semibold mb-3">Evolução do peso</h3>
+            <div id="chart" class="w-full h-64"></div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mt-6">
+          <div class="rounded-2xl border p-6">
+            <h3 class="font-semibold mb-3">Registro de Refeições</h3>
+            <div class="flex gap-2">
+              <input id="mealInput" class="flex-1 px-3 py-2 rounded-xl border" placeholder="Ex.: Salada + frango grelhado" />
+              <button id="mealAdd" class="px-4 py-2 rounded-xl bg-primary text-white">Adicionar</button>
+            </div>
+            <ul id="mealList" class="mt-3 space-y-2 text-sm"></ul>
+          </div>
+          <div class="rounded-2xl border p-6">
+            <h3 class="font-semibold mb-3">Registro de Treinos</h3>
+            <div class="flex gap-2">
+              <input id="workoutInput" class="flex-1 px-3 py-2 rounded-xl border" placeholder="Ex.: HIIT 20min" />
+              <button id="workoutAdd" class="px-4 py-2 rounded-xl bg-primary text-white">Adicionar</button>
+            </div>
+            <ul id="workoutLog" class="mt-3 space-y-2 text-sm"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-10 border-t">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-sm text-zinc-600 flex flex-col md:flex-row items-center md:justify-between gap-4">
+      <p>© <span id="year"></span> NutriMax. Todos os direitos reservados.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" aria-label="Instagram" class="hover:text-primary"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+        <a href="#" aria-label="YouTube" class="hover:text-primary"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+        <a href="#" aria-label="WhatsApp" class="hover:text-primary"><i data-lucide="phone" class="w-5 h-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Modal (simples, client-side) -->
+  <dialog id="loginModal" class="p-0 rounded-2xl w-[95vw] max-w-md">
+    <form method="dialog" class="p-6 bg-white rounded-2xl border">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-semibold">Entrar</h3>
+        <button class="p-2 rounded-lg hover:bg-zinc-100"><i data-lucide="x"></i></button>
+      </div>
+      <p class="text-sm text-zinc-600 mt-1">Autenticação de demonstração (cliente). Integre Firebase/Auth depois.</p>
+      <div class="mt-4 space-y-3">
+        <input id="email" type="email" placeholder="E-mail" class="w-full px-3 py-2 rounded-xl border" required />
+        <input id="password" type="password" placeholder="Senha" class="w-full px-3 py-2 rounded-xl border" required />
+        <button id="doLogin" class="w-full px-4 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition">Entrar</button>
+      </div>
+      <p class="text-xs text-zinc-500 mt-3">Dica: implemente <b>Firebase Auth</b> aqui no futuro.</p>
+    </form>
+  </dialog>
+
+  <!-- App Script -->
+  <script>
+    // ======= Ícones =======
+    lucide.createIcons();
+
+    // ======= I18N simples (PT/EN) =======
+    const i18n = {
+      pt: {
+        'nav.home': 'Início', 'nav.recipes': 'Receitas', 'nav.workouts': 'Treinos', 'nav.plans': 'Planos', 'nav.community': 'Comunidade', 'nav.profile': 'Meu Perfil',
+        'hero.subtitle': 'Emagreça de forma saudável e rápida',
+        'hero.description': 'Dietas personalizadas, treinos para todos os níveis, receitas fáceis e acompanhamento de resultados com gráficos. Junte-se à nossa comunidade.',
+        'cta.login': 'Entrar', 'cta.start': 'Comece Agora', 'cta.install': 'Instalar App',
+        'benefit1': 'Dietas personalizadas', 'benefit2': 'Exercícios guiados', 'benefit3': 'Gráficos de progresso',
+        'benefits.title': 'Principais benefícios',
+        'recipes.title': 'Receitas', 'workouts.title': 'Treinos', 'plans.title': 'Planos de dieta', 'community.title': 'Comunidade', 'profile.title': 'Meu Perfil'
+      },
+      en: {
+        'nav.home': 'Home', 'nav.recipes': 'Recipes', 'nav.workouts': 'Workouts', 'nav.plans': 'Plans', 'nav.community': 'Community', 'nav.profile': 'My Profile',
+        'hero.subtitle': 'Lose weight in a healthy and fast way',
+        'hero.description': 'Personalized diets, workouts for all levels, easy recipes, and progress tracking with charts. Join our community.',
+        'cta.login': 'Sign in', 'cta.start': 'Get Started', 'cta.install': 'Install App',
+        'benefit1': 'Personalized diets', 'benefit2': 'Guided workouts', 'benefit3': 'Progress charts',
+        'benefits.title': 'Main benefits',
+        'recipes.title': 'Recipes', 'workouts.title': 'Workouts', 'plans.title': 'Diet plans', 'community.title': 'Community', 'profile.title': 'My Profile'
+      }
+    };
+    let currentLang = 'pt';
+    const applyI18n = () => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const txt = i18n[currentLang]?.[key];
+        if (txt) el.textContent = txt;
+      });
+      document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+    };
+    document.getElementById('langToggle').addEventListener('click', () => { currentLang = currentLang === 'pt' ? 'en' : 'pt'; applyI18n(); });
+    applyI18n();
+
+    // ======= Dados de demonstração =======
+    const recipes = [
+      { id:1, name:'Salada Proteica', type:'emagrecimento', kcal:320, img:'https://images.unsplash.com/photo-1543353071-087092ec393a?q=80&w=1200&auto=format&fit=crop' },
+      { id:2, name:'Smoothie de Banana', type:'massa', kcal:450, img:'https://images.unsplash.com/photo-1514996937319-344454492b37?q=80&w=1200&auto=format&fit=crop' },
+      { id:3, name:'Bowl Vegano', type:'vegana', kcal:380, img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1200&auto=format&fit=crop' },
+      { id:4, name:'Omelete Low Carb', type:'lowcarb', kcal:280, img:'https://images.unsplash.com/photo-1551183053-bf91a1d81141?q=80&w=1200&auto=format&fit=crop' },
+      { id:5, name:'Frango com Quinoa', type:'emagrecimento', kcal:410, img:'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop' },
+      { id:6, name:'Pasta Integral', type:'massa', kcal:520, img:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?q=80&w=1200&auto=format&fit=crop' },
+    ];
+    const workouts = [
+      { id:1, name:'HIIT 20min', level:'Intermediário', video:'https://www.youtube.com/embed/ml6cT4AZdqI', desc:'Alta intensidade para queimar gordura.' },
+      { id:2, name:'Full Body 30min', level:'Iniciante', video:'https://www.youtube.com/embed/UBMk30rjy0o', desc:'Treino completo do corpo.' }
+    ];
+
+    // ======= Render Receitas =======
+    const recipeGrid = document.getElementById('recipeGrid');
+    const filter = document.getElementById('recipeFilter');
+    const search = document.getElementById('recipeSearch');
+
+    function renderRecipes(){
+      const f = filter.value; const q = search.value.toLowerCase();
+      const filtered = recipes.filter(r => (f==='all' || r.type===f) && r.name.toLowerCase().includes(q));
+      recipeGrid.innerHTML = filtered.map(r => `
+        <article class="group rounded-2xl border overflow-hidden bg-white hover:shadow-xl transition">
+          <div class="h-40 overflow-hidden">
+            <img src="${r.img}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition"/>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold flex items-center justify-between">${r.name}
+              <span class="text-xs px-2 py-1 rounded-full border text-zinc-600">${r.type}</span></h3>
+            <p class="text-sm text-zinc-600 mt-1">${r.kcal} kcal</p>
+            <button class="mt-3 px-3 py-2 rounded-xl bg-primary text-white hover:opacity-90 active:scale-95 transition">Ver receita</button>
+          </div>
+        </article>`).join('');
+    }
+    filter.addEventListener('change', renderRecipes);
+    search.addEventListener('input', renderRecipes);
+    renderRecipes();
+
+    // ======= Render Treinos =======
+    const workoutList = document.getElementById('workoutList');
+    function renderWorkouts(){
+      workoutList.innerHTML = workouts.map(w => `
+        <article class="rounded-2xl border overflow-hidden bg-white hover:shadow-xl transition">
+          <div class="aspect-video">
+            <iframe class="w-full h-full" src="${w.video}" title="${w.name}" allowfullscreen></iframe>
+          </div>
+          <div class="p-4">
+            <h3 class="font-semibold">${w.name} <span class="text-xs ml-2 px-2 py-1 rounded-full border text-zinc-600">${w.level}</span></h3>
+            <p class="text-sm text-zinc-600 mt-1">${w.desc}</p>
+            <button class="mt-3 px-3 py-2 rounded-xl border hover:bg-zinc-50 active:scale-95 transition">Adicionar ao registro</button>
+          </div>
+        </article>`).join('');
+    }
+    renderWorkouts();
+
+    // ======= Gráfico (Recharts via React UMD) =======
+    const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = Recharts;
+    const chartRoot = document.getElementById('chart');
+    const ReactRoot = ReactDOM.createRoot(chartRoot);
+    let weightData = [
+      { d:'01/08', kg: 84 }, { d:'08/08', kg: 83.2 }, { d:'15/08', kg: 82.5 }, { d:'22/08', kg: 82.1 }, { d:'29/08', kg: 81.7 }
+    ];
+    function Chart(){
+      return React.createElement(ResponsiveContainer, { width:'100%', height:250 },
+        React.createElement(LineChart, { data: weightData },
+          React.createElement(CartesianGrid, { strokeDasharray:'3 3' }),
+          React.createElement(XAxis, { dataKey:'d' }),
+          React.createElement(YAxis, { domain:['dataMin-1','dataMax+1'] }),
+          React.createElement(Tooltip, null),
+          React.createElement(Line, { type:'monotone', dataKey:'kg', stroke:'#E53935', strokeWidth:3, dot:true })
+        )
+      );
+    }
+    ReactRoot.render(React.createElement(Chart));
+
+    // ======= Registro simples (LocalStorage) =======
+    const mealInput = document.getElementById('mealInput');
+    const mealAdd = document.getElementById('mealAdd');
+    const mealList = document.getElementById('mealList');
+    const workoutInput = document.getElementById('workoutInput');
+    const workoutAdd = document.getElementById('workoutAdd');
+    const workoutLog = document.getElementById('workoutLog');
+
+    const state = JSON.parse(localStorage.getItem('nm_state')||'{}');
+    state.meals = state.meals||[]; state.workouts = state.workouts||[]; state.profile = state.profile||{};
+
+    function sync(){ localStorage.setItem('nm_state', JSON.stringify(state)); }
+    function renderLogs(){
+      mealList.innerHTML = state.meals.map(m=>`<li class="p-2 rounded-lg border">${m}</li>`).join('');
+      workoutLog.innerHTML = state.workouts.map(w=>`<li class="p-2 rounded-lg border">${w}</li>`).join('');
+    }
+    mealAdd.addEventListener('click', ()=>{ if(mealInput.value.trim()){ state.meals.push(mealInput.value.trim()); mealInput.value=''; sync(); renderLogs(); } });
+    workoutAdd.addEventListener('click', ()=>{ if(workoutInput.value.trim()){ state.workouts.push(workoutInput.value.trim()); workoutInput.value=''; sync(); renderLogs(); } });
+    renderLogs();
+
+    // ======= Perfil salvar =======
+    document.getElementById('saveProfile').addEventListener('click', ()=>{
+      state.profile = {
+        peso: document.getElementById('peso').value,
+        altura: document.getElementById('altura').value,
+        idade: document.getElementById('idade').value,
+        meta: document.getElementById('meta').value,
+      };
+      // atualiza gráfico (mock: -0.2kg)
+      const last = weightData[weightData.length-1].kg;
+      weightData = [...weightData, { d: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), kg: Math.max(50, last - 0.2) }];
+      ReactRoot.render(React.createElement(Chart));
+      sync();
+      alert('Perfil salvo!');
+    });
+
+    // ======= Login Modal (mock) =======
+    const loginBtn = document.getElementById('loginBtn');
+    const loginModal = document.getElementById('loginModal');
+    loginBtn.addEventListener('click', ()=> loginModal.showModal());
+    document.getElementById('doLogin').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      alert('Login simulado para ' + email + '. Integre Firebase Auth futuramente.');
+      loginModal.close();
+    });
+
+    // ======= Notificações (lembretes simples) =======
+    async function scheduleDemoNotification(){
+      if(!('Notification' in window)) return;
+      const perm = await Notification.requestPermission();
+      if(perm === 'granted'){
+        setTimeout(()=> new Notification('Hora do treino!', { body:'Seu treino de hoje começa em 10 minutos.' }), 4000);
+      }
+    }
+    scheduleDemoNotification();
+
+    // ======= PWA: Manifest e Service Worker (em memória, para 1 arquivo) =======
+    const manifest = {
+      name: 'NutriMax', short_name: 'NutriMax', start_url: '.', display: 'standalone', background_color: '#ffffff', theme_color: '#E53935',
+      icons: [
+        { src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23E53935"/><text x="50" y="58" font-size="56" text-anchor="middle" fill="white" font-family="Arial">N</text></svg>', sizes:'192x192', type:'image/svg+xml' }
+      ]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    const link = document.createElement('link'); link.rel='manifest'; link.href=manifestURL; document.head.appendChild(link);
+
+    const swCode = `
+      const CACHE = 'nutrimax-v1';
+      const ASSETS = self.__ASSETS__ || ['/'];
+      self.addEventListener('install', e=>{ e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())); });
+      self.addEventListener('activate', e=>{ e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))); self.clients.claim(); });
+      self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request).then(resp=>{ const clone = resp.clone(); caches.open(CACHE).then(c=>c.put(e.request, clone)); return resp; }).catch(()=>r))); });
+    `;
+    const swBlob = new Blob([swCode.replace('__ASSETS__', '[]')], {type:'text/javascript'});
+    const swURL = URL.createObjectURL(swBlob);
+    if('serviceWorker' in navigator){ navigator.serviceWorker.register(swURL); }
+
+    // Instalação (Add to Home Screen)
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').disabled = false; });
+    document.getElementById('installBtn').addEventListener('click', async ()=>{
+      if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; }
+    });
+
+    // ======= Acessibilidade & UX =======
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ======= Dicas de Integração futura =======
+    // - Backend: Node.js + MongoDB (Atlas) OU Firebase (Auth, Firestore, Storage)
+    // - Autenticação real: substitua o login simulado por Firebase Auth (Email/Senha ou Google)
+    // - Receitas/Treinos: buscar via API do seu servidor e exibir com paginação
+    // - Comunidade: criar coleção "posts" com usuário, conteúdo e timestamp
+    // - Notificações push: usar Firebase Cloud Messaging (FCM) com service worker próprio
+    // - SEO avançado: meta tags por página (se migrar para Next.js)
+  </script>
+</body>
+</html>
